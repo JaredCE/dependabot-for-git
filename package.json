@@ -13,7 +13,7 @@
   },
   "bin": {
     "dependabot-run-updates": "bin/run-updates.mjs",
-    "dependabot-create-prs": "bin/create-bitbucket-prs.mjs"
+    "dependabot-create-prs": "bin/create-prs.mjs"
   },
   "files": [
     "bin",
@@ -29,12 +29,17 @@
   "keywords": [
     "dependabot",
     "bitbucket",
-    "dependency updates"
+    "dependency updates",
+    "gitlab",
+    "dependencies",
+    "dependency update"
   ],
   "exports": {
     ".": "./src/run-updates.mjs",
     "./run-updates": "./src/run-updates.mjs",
-    "./create-bitbucket-prs": "./src/create-bitbucket-prs.mjs"
+    "./create-prs": "./src/create-prs.mjs",
+    "./providers/*": "./src/providers/*.mjs",
+    "./lib/format": "./src/lib/format.mjs"
   },
   "dependencies": {
     "js-yaml": "^5.2.3"
