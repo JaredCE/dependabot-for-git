@@ -60,6 +60,6 @@ npm install
 npm link   # makes dependabot-run-updates / dependabot-create-prs available globally
 
 cd /path/to/some/other/repo
-npm link @aat-labs/dependabot-bitbucket-bridge
+npm link dependabot-for-git
 BITBUCKET_WORKSPACE=... BITBUCKET_REPO_SLUG=... ... dependabot-run-updates
 ```
