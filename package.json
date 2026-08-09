@@ -16,6 +16,18 @@
     "bin",
     "src"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JaredCE/dependabot-for-git.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JaredCE/dependabot-for-git/issues"
+  },
+  "keywords": [
+    "dependabot",
+    "bitbucket",
+    "dependency updates"
+  ],
   "exports": {
     ".": "./src/run-updates.mjs",
     "./run-updates": "./src/run-updates.mjs",
