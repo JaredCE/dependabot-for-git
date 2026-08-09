@@ -28,12 +28,7 @@ import {
   defaultBody,
   truncateBody,
 } from './lib/format.mjs';
-
-// js-yaml is CommonJS-only; loading it via createRequire avoids ESM/CJS
-// default-export interop issues that can crop up depending on the local
-// npm/node_modules setup ("does not provide an export named 'default'").
-const require = createRequire(import.meta.url);
-const yaml = require('js-yaml');
+import { load } from 'js-yaml';
 
 export async function createPullRequests(argv = [], { env = process.env, provider } = {}) {
   const dryRun = env.DRY_RUN === 'true';
@@ -55,7 +50,7 @@ export async function createPullRequests(argv = [], { env = process.env, provide
     if (skipTransitiveOnly && !touchesManifestFile(files)) {
       console.log(
         `Skipping transitive-only update for ${dependencies.map((d) => d.name).join(', ')} ` +
-          `(only touches ${files.map((f) => f.name).join(', ')}, not the manifest)`
+        `(only touches ${files.map((f) => f.name).join(', ')}, not the manifest)`
       );
       return;
     }
@@ -85,7 +80,7 @@ export async function createPullRequests(argv = [], { env = process.env, provide
     if (skipTransitiveOnly && !touchesManifestFile(files)) {
       console.log(
         `Skipping transitive-only update for ${dependencies.map((d) => d.name).join(', ')} ` +
-          `(only touches ${files.map((f) => f.name).join(', ')}, not the manifest)`
+        `(only touches ${files.map((f) => f.name).join(', ')}, not the manifest)`
       );
       return;
     }
@@ -127,7 +122,7 @@ export async function createPullRequests(argv = [], { env = process.env, provide
       console.log(`No output file at ${outputPath} (likely no updates found), skipping`);
       return;
     }
-    const parsed = yaml.load(readFileSync(outputPath, 'utf8'));
+    const parsed = load(readFileSync(outputPath, 'utf8'));
     const calls = parsed?.output ?? parsed ?? [];
 
     for (const entry of calls) {

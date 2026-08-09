@@ -18,12 +18,7 @@ import { execFileSync } from 'node:child_process';
 import { resolve } from 'node:path';
 import { createRequire } from 'node:module';
 import { createProvider } from './providers/index.mjs';
-
-// js-yaml is CommonJS-only; loading it via createRequire avoids ESM/CJS
-// default-export interop issues that can crop up depending on the local
-// npm/node_modules setup ("does not provide an export named 'default'").
-const require = createRequire(import.meta.url);
-const yaml = require('js-yaml');
+import { dump } from 'js-yaml';
 
 export async function runUpdates({ env = process.env, provider, execFileSyncImpl = execFileSync } = {}) {
   provider = provider ?? createProvider({ env });
@@ -76,7 +71,7 @@ export async function runUpdates({ env = process.env, provider, execFileSyncImpl
 
     const jobPath = resolve(workDir, `job-${index}.yaml`);
     const outputPath = resolve(workDir, `output-${index}.yaml`);
-    writeFileSync(jobPath, yaml.dump(job));
+    writeFileSync(jobPath, dump(job));
 
     const args = ['update', '-f', jobPath, '-o', outputPath];
     if (DEPENDABOT_UPDATER_IMAGE) args.push('--updater-image', DEPENDABOT_UPDATER_IMAGE);
