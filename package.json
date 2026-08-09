@@ -1,0 +1,39 @@
+{
+  "name": "dependabot-for-git",
+  "version": "0.0.1",
+  "private": false,
+  "type": "module",
+  "description": "Runs dependabot/cli update jobs against a Bitbucket Cloud repo and turns the results into Bitbucket pull requests.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "dependabot-run-updates": "./bin/run-updates.mjs",
+    "dependabot-create-prs": "./bin/create-bitbucket-prs.mjs"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JaredCE/dependabot-for-git.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JaredCE/dependabot-for-git/issues"
+  },
+  "keywords": [
+    "dependabot",
+    "bitbucket",
+    "dependency updates"
+  ],
+  "exports": {
+    ".": "./src/run-updates.mjs",
+    "./run-updates": "./src/run-updates.mjs",
+    "./create-bitbucket-prs": "./src/create-bitbucket-prs.mjs"
+  },
+  "dependencies": {
+    "js-yaml": "^5.2.3"
+  }
+}
