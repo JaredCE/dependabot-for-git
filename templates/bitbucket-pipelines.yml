@@ -1,12 +1,15 @@
-# Copy this into any repo that should get dependency-update PRs.
+# Copy this into any Bitbucket repo that should get dependency-update PRs.
 # The only per-repo files needed are this one and dependabot-config.json -
-# everything else lives in the published dependabot-for-git
-# package, so there's nothing else to keep in sync across repos.
+# everything else lives in the published dependabot-for-git package, so
+# there's nothing else to keep in sync across repos.
 #
 # Repository variables to set (Repo settings -> Pipelines -> Repository variables):
 #   BITBUCKET_GIT_TOKEN  - Bitbucket access token, repo READ scope
 #   NPM_TOKEN            - npm token for private npmjs.org packages/scopes (optional)
 #   BITBUCKET_PR_TOKEN   - Bitbucket access token, repo WRITE + PR scopes
+#
+# Provider is auto-detected from BITBUCKET_WORKSPACE (set automatically by
+# Bitbucket Pipelines) - no GIT_PROVIDER needed here.
 
 image: node:22
 

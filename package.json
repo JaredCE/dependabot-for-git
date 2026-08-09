@@ -1,16 +1,19 @@
 {
   "name": "dependabot-for-git",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": false,
   "type": "module",
-  "description": "Runs dependabot/cli update jobs against a Bitbucket Cloud repo and turns the results into Bitbucket pull requests.",
+  "description": "Runs dependabot/cli update jobs against Bitbucket Cloud or GitLab repos and turns the results into real pull/merge requests.",
   "license": "MIT",
   "engines": {
     "node": ">=22"
   },
+  "scripts": {
+    "test": "mocha \"test/**/*.test.mjs\""
+  },
   "bin": {
     "dependabot-run-updates": "bin/run-updates.mjs",
-    "dependabot-create-prs": "bin/create-bitbucket-prs.mjs"
+    "dependabot-create-prs": "bin/create-prs.mjs"
   },
   "files": [
     "bin",
@@ -26,14 +29,24 @@
   "keywords": [
     "dependabot",
     "bitbucket",
-    "dependency updates"
+    "dependency updates",
+    "gitlab",
+    "dependencies",
+    "dependency update"
   ],
   "exports": {
     ".": "./src/run-updates.mjs",
     "./run-updates": "./src/run-updates.mjs",
-    "./create-bitbucket-prs": "./src/create-bitbucket-prs.mjs"
+    "./create-prs": "./src/create-prs.mjs",
+    "./providers/*": "./src/providers/*.mjs",
+    "./lib/format": "./src/lib/format.mjs"
   },
   "dependencies": {
     "js-yaml": "^5.2.3"
+  },
+  "devDependencies": {
+    "chai": "^6.2.2",
+    "mocha": "^11.8.0",
+    "sinon": "^22.1.0"
   }
 }

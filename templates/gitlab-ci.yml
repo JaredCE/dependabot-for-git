@@ -1,0 +1,69 @@
+# Copy this into any GitLab repo that should get dependency-update MRs.
+# The only per-repo files needed are this one and dependabot-config.json -
+# everything else lives in the published dependabot-for-git package.
+#
+# CI/CD variables to set (Settings -> CI/CD -> Variables, masked + protected):
+#   GITLAB_TOKEN     - access token (project or personal), read_repository scope
+#   GITLAB_PR_TOKEN   - access token, api scope (needed to write files + open MRs)
+#   NPM_TOKEN         - npm token for private npmjs.org packages/scopes (optional)
+#
+# Provider is auto-detected from CI_PROJECT_ID (set automatically by GitLab
+# CI) - no GIT_PROVIDER needed here. Repo context (CI_PROJECT_PATH,
+# CI_COMMIT_SHA, CI_SERVER_HOST, CI_API_V4_URL, CI_DEFAULT_BRANCH) all come
+# from GitLab's predefined variables automatically too.
+#
+# Not run on every push - trigger manually ("Run pipeline" in the UI) or set
+# up a schedule under Build -> Pipeline schedules pointing at this file.
+
+stages:
+  - build-cli
+  - run-updates
+  - create-prs
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "web"
+
+build-cli:
+  stage: build-cli
+  image: golang:1.26
+  script:
+    - git clone --depth 1 https://github.com/dependabot/cli.git /tmp/dependabot-cli
+    - cd /tmp/dependabot-cli
+    - go build -o dependabot ./cmd/dependabot
+    - mkdir -p "$CI_PROJECT_DIR/.bin"
+    - mv dependabot "$CI_PROJECT_DIR/.bin/dependabot"
+  artifacts:
+    paths:
+      - .bin/
+
+run-updates:
+  stage: run-updates
+  image: node:22
+  needs: ["build-cli"]
+  services:
+    - docker:24-dind
+  variables:
+    # Simplest working dind setup for this pipeline; consider TLS-secured
+    # dind (the GitLab-recommended default) if your runner config requires it.
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    - apt-get update -qq && apt-get install -y --no-install-recommends docker.io
+  script:
+    - export PATH="$CI_PROJECT_DIR/.bin:$PATH"
+    - chmod +x .bin/dependabot
+    - npm install -g dependabot-for-git
+    - dependabot-run-updates
+  artifacts:
+    paths:
+      - .dependabot-run/
+
+create-prs:
+  stage: create-prs
+  image: node:22
+  needs: ["run-updates"]
+  script:
+    - npm install -g dependabot-for-git
+    - dependabot-create-prs
