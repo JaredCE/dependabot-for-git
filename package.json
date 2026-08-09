@@ -3,10 +3,13 @@
   "version": "0.0.2",
   "private": false,
   "type": "module",
-  "description": "Runs dependabot/cli update jobs against a Bitbucket Cloud repo and turns the results into Bitbucket pull requests.",
+  "description": "Runs dependabot/cli update jobs against Bitbucket Cloud or GitLab repos and turns the results into real pull/merge requests.",
   "license": "MIT",
   "engines": {
     "node": ">=22"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*.test.mjs\""
   },
   "bin": {
     "dependabot-run-updates": "bin/run-updates.mjs",
