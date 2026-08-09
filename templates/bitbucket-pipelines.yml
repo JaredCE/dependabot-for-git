@@ -1,6 +1,6 @@
 # Copy this into any repo that should get dependency-update PRs.
 # The only per-repo files needed are this one and dependabot-config.json -
-# everything else lives in the published @aat-labs/dependabot-bitbucket-bridge
+# everything else lives in the published dependabot-for-git
 # package, so there's nothing else to keep in sync across repos.
 #
 # Repository variables to set (Repo settings -> Pipelines -> Repository variables):
