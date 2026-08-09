@@ -6,8 +6,7 @@ import { join } from 'node:path';
 import { createRequire } from 'node:module';
 import { runUpdates } from '../src/run-updates.mjs';
 
-const require = createRequire(import.meta.url);
-const yaml = require('js-yaml');
+import { load } from 'js-yaml';
 
 function makeFakeProvider(overrides = {}) {
   return {
@@ -47,7 +46,7 @@ describe('run-updates orchestration', () => {
 
       const jobPath = join(dir, '.dependabot-run', 'job-0.yaml');
       expect(existsSync(jobPath)).to.equal(true);
-      const job = yaml.load(readFileSync(jobPath, 'utf8'));
+      const job = load(readFileSync(jobPath, 'utf8'));
 
       expect(job.job['package-manager']).to.equal('npm_and_yarn');
       expect(job.job.source).to.deep.equal({ provider: 'fake', repo: 'group/project', directory: '/', commit: 'abc123' });
@@ -63,7 +62,7 @@ describe('run-updates orchestration', () => {
 
       await runUpdates({ env: { NPM_TOKEN: 'npm-secret' }, provider, execFileSyncImpl });
 
-      const job = yaml.load(readFileSync(join(dir, '.dependabot-run', 'job-0.yaml'), 'utf8'));
+      const job = load(readFileSync(join(dir, '.dependabot-run', 'job-0.yaml'), 'utf8'));
       expect(job.credentials).to.deep.include({
         type: 'npm_registry',
         registry: 'registry.npmjs.org',
@@ -80,7 +79,7 @@ describe('run-updates orchestration', () => {
 
       await runUpdates({ env: {}, provider, execFileSyncImpl });
 
-      const job = yaml.load(readFileSync(join(dir, '.dependabot-run', 'job-0.yaml'), 'utf8'));
+      const job = load(readFileSync(join(dir, '.dependabot-run', 'job-0.yaml'), 'utf8'));
       expect(job.credentials).to.have.length(1);
     });
   });

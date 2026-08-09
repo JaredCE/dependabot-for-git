@@ -6,8 +6,7 @@ import { join } from 'node:path';
 import { createRequire } from 'node:module';
 import { createPullRequests } from '../src/create-prs.mjs';
 
-const require = createRequire(import.meta.url);
-const yaml = require('js-yaml');
+import { dump } from 'js-yaml';
 
 function makeFakeProvider(overrides = {}) {
   return {
@@ -38,7 +37,7 @@ async function withScratchDir(fn) {
 
 function writeOutputFile(dir, filename, outputEntries) {
   const path = join(dir, filename);
-  writeFileSync(path, yaml.dump({ output: outputEntries }));
+  writeFileSync(path, dump({ output: outputEntries }));
   return path;
 }
 
