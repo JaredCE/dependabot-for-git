@@ -1,3 +1,8 @@
+[![Open on npmx.dev](https://npmx.dev/api/registry/badge/engines/dependabot-for-git)](https://npmx.dev/package/dependabot-for-git)
+[![Open on npmx.dev](https://npmx.dev/api/registry/badge/version/dependabot-for-git)](https://npmx.dev/package/dependabot-for-git)
+![workflow status](https://github.com/JaredCE/dependabot-for-git/actions/workflows/node.yml/badge.svg)
+[![BuyMeACoffee](https://raw.githubusercontent.com/pachadotdev/buymeacoffee-badges/main/bmc-yellow.svg)](https://buymeacoffee.com/jarede)
+
 # dependabot-for-git
 
 Reusable CLI that runs [dependabot/cli](https://github.com/dependabot/cli) update jobs against a git
@@ -22,30 +27,18 @@ Adding a new provider means implementing the interface in `src/providers/bitbuck
 and registering it in `src/providers/index.mjs` — `src/run-updates.mjs` and
 `src/create-prs.mjs` don't need to change at all.
 
-## Publishing
-
-```bash
-npm publish --access public
-```
-
-Nothing in this package is secret — all tokens are supplied at runtime via env vars,
-never embedded — so publishing publicly means consuming pipelines don't need any npm auth
-just to install the tool. If your org requires it private, publish with
-`--access restricted` and set up an `.npmrc` in each consuming pipeline pointing at an npm
-token with read access to your scope.
-
 ## Using it in a repo
 
 ### Bitbucket Cloud
 
-Copy `templates/bitbucket-pipelines.yml` -> `bitbucket-pipelines.yml` and
-`templates/dependabot-config.json` -> `dependabot-config.json`. Set the three repository
+Copy [`templates/bitbucket-pipelines.yml`](templates/bitbucket-pipelines.yml) -> `bitbucket-pipelines.yml` and
+[`templates/dependabot-config.json`](templates/dependabot-config.json) -> `dependabot-config.json`. Set the three repository
 variables listed in the template's header comment, then trigger the `dependabot-update`
 custom pipeline manually or on a schedule (Repo settings -> Pipelines -> Schedules).
 
 ### GitLab
 
-Copy `templates/gitlab-ci.yml` -> `.gitlab-ci.yml` and `templates/dependabot-config.json`
+Copy [`templates/gitlab-ci.yml`](templates/gitlab-ci.yml) -> `.gitlab-ci.yml` and [`templates/dependabot-config.json`](templates/dependabot-config.json)
 -> `dependabot-config.json`. Set the CI/CD variables listed in the template's header
 comment (Settings -> CI/CD -> Variables), then trigger it manually ("Run pipeline") or on
 a schedule (Build -> Pipeline schedules).
