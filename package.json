@@ -1,6 +1,6 @@
 {
   "name": "dependabot-for-git",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": false,
   "type": "module",
   "description": "Runs dependabot/cli update jobs against Bitbucket Cloud or GitLab repos and turns the results into real pull/merge requests.",
