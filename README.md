@@ -1,3 +1,8 @@
+[![Open on npmx.dev](https://npmx.dev/api/registry/badge/engines/dependabot-for-git)](https://npmx.dev/package/dependabot-for-git)
+[![Open on npmx.dev](https://npmx.dev/api/registry/badge/version/dependabot-for-git)](https://npmx.dev/package/dependabot-for-git)
+![workflow status](https://github.com/JaredCE/dependabot-for-git/actions/workflows/node.yml/badge.svg)
+[![BuyMeACoffee](https://raw.githubusercontent.com/pachadotdev/buymeacoffee-badges/main/bmc-yellow.svg)](https://buymeacoffee.com/jarede)
+
 # dependabot-for-git
 
 Reusable CLI that runs [dependabot/cli](https://github.com/dependabot/cli) update jobs against a git
